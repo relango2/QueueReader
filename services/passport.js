@@ -5,13 +5,13 @@ const mongoose = require("mongoose");
 
 const Users = mongoose.model("Users");
 
-passport.serializeUser((user,done)=>{
-  done(null,user.id);
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
 
-passport.deserializeUser((id,done)=>{
-  Users.findById(id).then(ela=>{
-    done(null,ela)
+passport.deserializeUser((id, done) => {
+  Users.findById(id).then(ela => {
+    done(null, ela);
   });
 });
 
@@ -20,14 +20,17 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback"
+      callbackURL: "/auth/google/callback",
+      proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
       Users.findOne({ googleId: profile.id }).then(exi => {
         if (exi) {
-          done(null,exi);
+          done(null, exi);
         } else {
-          new Users({ googleId: profile.id }).save().then(cre=> done(null,cre));
+          new Users({ googleId: profile.id })
+            .save()
+            .then(cre => done(null, cre));
         }
       });
 
