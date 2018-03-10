@@ -34,9 +34,9 @@ passport.use(
         }
       });
 
-      /*console.log("accessToken,", accessToken);
+      console.log("accessToken,", accessToken);
       console.log("refreshToken,", refreshToken);
-      console.log("profile,", profile);*/
+      console.log("profile,", profile);
     }
   )
 );
