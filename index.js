@@ -10,7 +10,7 @@ require("./services/passport");
 mongoose.connect(key.MongoURI);
 
 const app = express();
-
+console.log(app);
 app.use(bodyParser.json());
 app.use(
   cookieSession({
