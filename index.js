@@ -10,7 +10,7 @@ require("./services/passport");
 mongoose.connect(key.MongoURI);
 
 const app = express();
-console.log(app);
+//console.log(app);
 app.use(bodyParser.json());
 app.use(
   cookieSession({
@@ -24,16 +24,14 @@ app.use(passport.session());
 
 require("./routes/authroutes")(app);
 require("./routes/billingRoutes")(app);
-console.log(process.env.NODE_ENV);
 if ((process.env.NODE_ENV = "production")) {
   // Express will serve up production assets
   // like our main.js file, or main.css file!
-  app.use(express.static("client/build"));
-
+  //app.use(express.static("client/build"));
+  app.use(express.static(path.join(__dirname, "/client/build")));
   // Express will serve up the index.html file
   // if it doesn't recognize the route
   const path = require("path");
-  console.log(__dirname);
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
     //res.sendFile(path.resolve("build", "index.html"));
