@@ -5,5 +5,8 @@ module.exports = {
   MongoURI: "mongodb://relango2:Rukmoney7@ds155278.mlab.com:55278/relango",
   cookieKey: "rgdsiosghkdshdksghkjdshgjkhdfakjghfdjkghkjldfhgjkld",
   stripePublishableKey: "pk_test_1SJkeK7MFdNY64H1pXLNZMjx",
-  stripeSecretKey: "sk_test_QfipXYlm6OOwX25oG37e2ahz"
+  stripeSecretKey: "sk_test_QfipXYlm6OOwX25oG37e2ahz",
+  sendGridKey:
+    "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",
+  redirectDomain: "http://localhost:3000"
 };
