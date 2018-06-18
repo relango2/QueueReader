@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "engine": {
+  "engines": {
     "node": "8.1.1",
     "npm": "5.0.3"
   },
@@ -12,28 +12,24 @@
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run webhook\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build--prefix client ",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "webhook": "./sendgrid_webhook.sh"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "concurrency": "^0.1.4",
-    "concurrently": "^3.5.1",
-    "cookie-session": "^2.0.0-beta.3",
-    "express": "^4.16.2",
-    "homebrew": "^0.1.0",
-    "localtunnel": "^1.9.0",
-    "lodash": "^4.17.10",
-    "materialize-css": "^0.100.2",
-    "mongoose": "^5.0.8",
-    "mongose": "0.0.2-security",
-    "nodemon": "^1.17.1",
-    "passport": "^0.4.0",
+    "body-parser": "^1.17.2",
+    "concurrently": "^3.5.0",
+    "cookie-session": "^2.0.0-beta.2",
+    "express": "^4.15.3",
+    "localtunnel": "^1.8.3",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.11.1",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
     "passport-google-oauth20": "^1.0.0",
-    "path-parser": "^4.1.0",
-    "sendgrid": "^5.2.3",
-    "stripe": "^5.8.0"
+    "path-parser": "^2.0.2",
+    "sendgrid": "^5.1.2",
+    "stripe": "^4.23.1"
   }
 }
