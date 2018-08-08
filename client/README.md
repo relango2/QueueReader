@@ -1947,7 +1947,7 @@ Here’s a programmatic example using [Node](https://nodejs.org/) and [Express](
 
 ```javascript
 const express = require('express');
-const path = require('path');
+const path = require('path').default;
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'build')));
