@@ -55,16 +55,14 @@ io.on("connection", socket => {
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
 
-io.on('error', function() {
-  //here i change options
-  socket = io.connect(host, options);
-});
+io.on('error', function() {});
 
-var outputArray = ["{\"key\" : \"1\", \"value\":\"random\"}"];
+var outputObj = {};
 
 var HighLevelConsumer = kafka.HighLevelConsumer;
 var Client = kafka.Client;
 
+//
 var client = new Client("54.183.204.91");
 var topics = [
   {
@@ -79,42 +77,42 @@ var options = {
   encoding: "buffer"
 };
 
-/*
-return Events.create({
-        id: decodedMessage.id,
-        type: decodedMessage.type,
-        userId: decodedMessage.userId,
-        sessionId: decodedMessage.sessionId,
-        data: JSON.stringify(decodedMessage.data),
-        createdAt: new Date()
-    });
-*/
-
+//initializing the consumer
 var consumer = new HighLevelConsumer(client, topics, options);
 
+//consumer error handler
 consumer.on("message", function(message) {
-  var decodedMessage = JSON.parse(message.value);
-  var o = {
-    data: decodedMessage,
-    createdAt: Date.now()
-  };
-  outputArray.push(o);
+  //pass the message to the parser
+  handleMessage(message);
+  console.log('on Message');
 });
 
+function handleMessage(message) {
+  //extract the value from the kafka message
+  var value = JSON.parse(message.value);
+  // extract key from the Kafka message
+  var key = new Buffer(message.key).toString('ascii');
+  // extract offset from the Kafka message
+  var offset = message.offset;
+  console.log(offset);
+  var keyCombo = key + "_" + offset;
+  // record the message key as current standing in the outputObj object
+  outputObj[keyCombo] = value.replace(/'/g, '"');
+} // handleMessage
+
+//Consumer error hadler
 consumer.on('error', function(err) {
+  //log the error received
   console.log('error', err);
 });
 
+//Socket emitter
 const getApiAndEmit = async socket => {
-  /*var o = {
-    data: "{\"key\" : \"1\", \"value\":\"random\"}",
-    createdAt: Date.now()
-  };*/
-  outputArray.push("{\"key\" : \"1\", \"value\":\"random\"}");
-
-  //console.log(outputArray);
-  socket.emit("FromAPI", outputArray);
-
+  //socket emiting the outputObj object with the keyword FromAPI
+  socket.emit("FromAPI", outputObj);
+  console.log('emmiter');
+  console.log(outputObj);
 };
 
+//server listening
 server.listen(4001, () => console.log(`Listening on port ${ 4001}`));

@@ -21,17 +21,23 @@ class QueueReader extends Component {
   }
 
   renderSurveys() {
-    var jsonObj = Object.keys(this.state.response);
-    var jsonObjValue = Object.values(this.state.response);
+    var json = this.state.response;
     var arr = [];
-    jsonObj.forEach(function(key) {
-      arr.push(jsonObjValue[key]);
+    Object.keys(json).forEach(function(key) {
+      console.log(key);
+      arr.push(json[key]);
     });
-    return arr.map((item, index) => {
+
+    console.log(arr);
+    return Object.keys(this.state.response).reverse().map((item, index) => {
+      console.log(item);
       return (<div className="card darken-1" key={index}>
         <div className="card-content">
-          <span className="card-title">{JSON.parse(item).value}</span>
-          <p>{JSON.parse(item).key}</p>
+          <span className="card-title">{item}</span>
+          <p>Key: {JSON.parse(this.state.response[item]).key}</p>
+          <p className="right">
+            Value: {JSON.parse(this.state.response[item]).value}
+          </p>
         </div>
       </div>);
     });
