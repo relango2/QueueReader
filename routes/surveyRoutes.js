@@ -1,6 +1,6 @@
 const _ = require("lodash");
-const { Path } = require("path-parser");
-const { URL } = require("url");
+const {Path} = require("path-parser");
+const {URL} = require("url");
 const mongoose = require("mongoose");
 const Survey = mongoose.model("surveys");
 const requireLogin = require("../Middlewares/requireLogin");
@@ -9,10 +9,15 @@ const Mailer = require("../services/Mailer");
 const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
 
 module.exports = app => {
+
+  app.get("/api/queue", requireLogin, async (req, res) => {
+    const surveys = await Survey.find({_user: req.user.id}).select({recipients: false});
+    console.log('I am on survey routes');
+    res.send(surveys);
+  });
+
   app.get("/api/surveys", requireLogin, async (req, res) => {
-    const surveys = await Survey.find({
-      _user: req.user.id
-    }).select({ recipients: false });
+    const surveys = await Survey.find({_user: req.user.id}).select({recipients: false});
 
     res.send(surveys);
   });
@@ -25,46 +30,45 @@ module.exports = app => {
     const p = new Path("api/surveys/:surveyId/:choice");
     console.log(req.body);
 
-    _.chain(req.body)
-      .map(({ email, url }) => {
-        const match = p.test(new URL(url).pathname);
-        if (match) {
-          return { email, surveyId: match.surveyId, choice: match.choice };
-        }
-      })
-      .compact()
-      .uniqBy("email", "surveyId")
-      .each(({ surveyId, email, choice }) => {
-        console.log(surveyId);
-        console.log(email);
-        console.log(choice);
-        Survey.updateOne(
-          {
-            _id: surveyId,
-            recipients: { $elemMatch: { email: email, responded: false } }
-          },
-          {
-            $inc: { [choice]: 1 },
-            $set: { "recipients.$.responded": true },
-            lastResponded: new Date()
+    _.chain(req.body).map(({email, url}) => {
+      const match = p.test(new URL(url).pathname);
+      if (match) {
+        return {email, surveyId: match.surveyId, choice: match.choice};
+      }
+    }).compact().uniqBy("email", "surveyId").each(({surveyId, email, choice}) => {
+      console.log(surveyId);
+      console.log(email);
+      console.log(choice);
+      Survey.updateOne({
+        _id: surveyId,
+        recipients: {
+          $elemMatch: {
+            email: email,
+            responded: false
           }
-        ).exec();
-      })
-      .value();
+        }
+      }, {
+        $inc: {
+          [choice]: 1
+        },
+        $set: {
+          "recipients.$.responded": true
+        },
+        lastResponded: new Date()
+      }).exec();
+    }).value();
 
     res.send({});
   });
 
   app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
-    const { title, subject, body, recipients } = req.body;
+    const {title, subject, body, recipients} = req.body;
 
     const survey = new Survey({
       title,
       subject,
       body,
-      recipients: recipients
-        .split(",")
-        .map(email => ({ email: email.trim(), responded: false })),
+      recipients: recipients.split(",").map(email => ({email: email.trim(), responded: false})),
       _user: req.user.id,
       dateSent: Date.now()
     });

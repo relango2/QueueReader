@@ -6,6 +6,8 @@ import Header from "./Header";
 import Landing from "./Landing";
 import DashBoard from './DashBoard';
 import SurveyNew from './surveys/SurveyNew';
+import QueueReader from './surveys/QueueReader';
+
 class App extends Component {
   componentDidMount() {
     this.props.fetchuser();
@@ -18,6 +20,7 @@ class App extends Component {
           <Route exact="exact" path="/" component={Landing}/>
           <Route exact="exact" path="/surveys" component={DashBoard}/>
           <Route exact="exact" path="/surveys/New" component={SurveyNew}/>
+          <Route exact="exact" path="/queue" component={QueueReader}/>
         </div>
       </BrowserRouter>
     </div>);
