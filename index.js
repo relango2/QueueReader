@@ -60,6 +60,10 @@ io.on("connection", socket => {
 });
 
 io.on('error', function() {});
+io.configure(function() {
+  io.set("transports", ["xhr-polling"]);
+  io.set("polling duration", 10);
+});
 
 var outputObj = {};
 
@@ -119,5 +123,4 @@ const getApiAndEmit = async socket => {
 };
 
 //server listening
-//server.listen(socketPORT,'127.0.0.1', () => console.log(`Listening on port ${socketPORT}`));
-server.listen(5001, () => console.log(`Listening on port ${5001}`));
+server.listen(5001, () => console.log(`Listening on port ${ 5001}`));
