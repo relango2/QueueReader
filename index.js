@@ -48,6 +48,8 @@ if ((process.env.NODE_ENV = "production")) {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
 
+const socketPORT = process.env.PORT || 5001;
+
 const server = http.createServer(app);
 const io = socketIo(server);
 
@@ -117,4 +119,4 @@ const getApiAndEmit = async socket => {
 };
 
 //server listening
-server.listen(process.env.PORT || 5001 () => console.log(`Listening on port ${process.env.PORT || 5001}`));
+server.listen(socketPORT, () => console.log(`Listening on port ${socketPORT}`));
