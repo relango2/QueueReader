@@ -120,4 +120,4 @@ const getApiAndEmit = async socket => {
 
 //server listening
 //server.listen(socketPORT,'127.0.0.1', () => console.log(`Listening on port ${socketPORT}`));
-server.listen(socketPORT, () => console.log(`Listening on port ${socketPORT}`));
+server.listen(5001, () => console.log(`Listening on port ${socketPORT}`));
