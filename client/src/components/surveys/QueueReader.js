@@ -9,16 +9,14 @@ class QueueReader extends Component {
     super();
     this.state = {
       response: false,
-      endpoint: (
-        process.env.PORT
-        ? "https://queuereader.herokuapp.com:5001/"
-        : "http://127.0.0.1:5001")
+      endpoint: ("http://queuereader.herokuapp.com/:5001")
     };
   }
   componentDidMount() {
     //this.props.fetchQueue();
     const {endpoint} = this.state;
     const socket = socketIOClient(endpoint);
+    //const socket = socketIOClient();
     socket.on("FromAPI", data => this.setState({response: data}));
   }
 
