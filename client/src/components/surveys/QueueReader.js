@@ -9,7 +9,7 @@ class QueueReader extends Component {
     super();
     this.state = {
       response: false,
-      endpoint: ("http://queuereader.herokuapp.com")
+      endpoint: ("http://127.0.0.1:5001")
     };
   }
   componentDidMount() {
