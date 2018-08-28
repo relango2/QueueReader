@@ -11,7 +11,7 @@ class QueueReader extends Component {
       response: false,
       endpoint: (
         process.env.PORT
-        ? "https://queuereader.herokuapp.com/"
+        ? "https://queuereader.herokuapp.com:5001/"
         : "http://127.0.0.1:5001")
     };
   }
