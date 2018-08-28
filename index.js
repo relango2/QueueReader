@@ -117,4 +117,4 @@ const getApiAndEmit = async socket => {
 };
 
 //server listening
-server.listen(process.env.PORT || 5001, 'queuereader.herokuapp.com', () => console.log(`Listening on port ${process.env.PORT || 5001}`));
+server.listen(process.env.PORT || 5001 () => console.log(`Listening on port ${process.env.PORT || 5001}`));
