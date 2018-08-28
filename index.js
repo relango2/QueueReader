@@ -56,14 +56,14 @@ const io = socketIo(server);
 io.on("connection", socket => {
   console.log("New client connected"),
   setInterval(() => getApiAndEmit(socket), 10000);
+  socket.configure(function() {
+    socket.set("transports", ["xhr-polling"]);
+    socket.set("polling duration", 10);
+  });
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
 
 io.on('error', function() {});
-io.configure(function() {
-  io.set("transports", ["xhr-polling"]);
-  io.set("polling duration", 10);
-});
 
 var outputObj = {};
 
