@@ -56,10 +56,7 @@ const io = socketIo(server);
 io.on("connection", socket => {
   console.log("New client connected"),
   setInterval(() => getApiAndEmit(socket), 10000);
-  socket.configure(function() {
-    socket.set("transports", ["xhr-polling"]);
-    socket.set("polling duration", 10);
-  });
+
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
 
@@ -123,4 +120,4 @@ const getApiAndEmit = async socket => {
 };
 
 //server listening
-server.listen(5001, () => console.log(`Listening on port ${ 5001}`));
+server.listen(5001, "0.0.0.0", () => console.log(`Listening on port ${ 5001}`));
