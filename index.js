@@ -46,6 +46,7 @@ if ((process.env.NODE_ENV = "production")) {
 }
 
 const PORT = process.env.PORT || 5000;
+//UnCommmenting to make sure that the Express and the HTTP server runs on the same port.
 //app.listen(PORT);
 
 const server = http.createServer(app);
