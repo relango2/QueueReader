@@ -4,9 +4,6 @@ const {URL} = require("url");
 const mongoose = require("mongoose");
 const Survey = mongoose.model("surveys");
 const requireLogin = require("../Middlewares/requireLogin");
-const requireCredits = require("../Middlewares/requireCredits");
-const Mailer = require("../services/Mailer");
-const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
 
 module.exports = app => {
 
@@ -21,9 +18,9 @@ module.exports = app => {
   });
 
   app.post("/api/surveys", requireLogin, async (req, res) => {
-    const {title, subject, body} = req.body;
+    const {topic, key, value} = req.body;
 
-    const survey = new Survey({title, subject, body, _user: req.user.id, dateSent: Date.now()});
+    const survey = new Survey({topic, key, value, _user: req.user.id, dateSent: Date.now()});
 
     try {
       const sur = await survey.save();

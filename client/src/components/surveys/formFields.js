@@ -1,5 +1,5 @@
 export default [
-  { label: "Survey Topic", name: "title" },
-  { label: "Key", name: "subject" },
-  { label: "Value", name: "body" }
+  { label: "Survey Topic", name: "topic" },
+  { label: "Key", name: "key" },
+  { label: "Value", name: "value" }
 ];

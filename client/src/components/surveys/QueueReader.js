@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {fetchSurveys} from "../../actions";
 import {fetchQueue} from "../../actions";
 import socketIOClient from "socket.io-client";
 
